@@ -24,8 +24,8 @@ namespace Management.Infrastructure.Services.Worker
         }
         public async Task DoWorkAsync(CancellationToken cancellationToken)
         {
-              while(!cancellationToken.IsCancellationRequested)
-              {
+        //      while(!cancellationToken.IsCancellationRequested)
+        //      {
             
               var tasks =await _taskRepo.GetTaskForWeek();
                 foreach (var task in tasks)
@@ -36,10 +36,16 @@ namespace Management.Infrastructure.Services.Worker
                     {
                         Console.WriteLine($"Task{task.Title} is Due within the Next 48 Hours ");
                         _logger.LogInformation($"Task {task.Title} is Due within the Next 48 Hours");
+                       
                     }
-                    await Task.Delay(5000);
+                else
+                {
+                    await Task.Delay(10000);
                 }
+                
+
             }
+            //}
             await Task.CompletedTask;
         }
 

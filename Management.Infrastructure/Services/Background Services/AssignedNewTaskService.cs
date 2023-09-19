@@ -23,8 +23,13 @@ namespace Management.Infrastructure.Services.Background_Services
         }
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+           while(stoppingToken.IsCancellationRequested)
+            {
+                await DoWork(stoppingToken);
+            }
 
-            await DoWork(stoppingToken);
+               
+  
 
         }
 

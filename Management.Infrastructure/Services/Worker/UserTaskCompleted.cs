@@ -25,8 +25,8 @@ namespace Management.Infrastructure.Services.Worker
         }
         public async System.Threading.Tasks.Task DoWorkAsync(CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
-            {
+            //while (!cancellationToken.IsCancellationRequested)
+            //{
 
                 var completedTask = await _taskRepo.GetTaskByRead();
                 if (completedTask != null)
@@ -35,12 +35,14 @@ namespace Management.Infrastructure.Services.Worker
                     {
                         Console.WriteLine($"Task{task.Title} with user {task.UserId} Has been completed ");
                         _logger.LogInformation($"Task{task.Title} with user {task.UserId} Has been completed");
+                        
                     }
+                await System.Threading.Tasks.Task.Delay(5000);
 
-                    await System.Threading.Tasks.Task.Delay(6000);
+
                 }
 
-            }
+            //}
             await System.Threading.Tasks.Task.CompletedTask;
         }
         }

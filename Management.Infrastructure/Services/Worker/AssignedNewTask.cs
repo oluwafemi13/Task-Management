@@ -20,23 +20,31 @@ namespace Management.Infrastructure.Services.Worker
         }
         public async Task DoWorkAsync(CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-
-                var tasks = await _taskRepo.GetAllTimedTask();
+           
+               var tasks = await _taskRepo.GetAllTimedTask();
                 foreach (var task in tasks)
                 {
                     DateTime now = DateTime.Now;
                     DateTime previous12Hours = now.AddHours(-12);
-                    if (task.DateCreated <= now || previous12Hours <=task.DateCreated )
+                    if (task.DateCreated <= now || previous12Hours <= task.DateCreated)
                     {
                         Console.WriteLine($"Task{task.Title} has been created within the last 12 Hours ");
                         _logger.LogInformation($"Task {task.Title} has been created within the last 12 Hours");
+                        
+
                     }
+                    else
+                    {
                     await Task.Delay(5000);
+                    }
+
+                    
                 }
+
+
+
             }
-            await Task.CompletedTask;
-        }
+            
+            
     }
 }
